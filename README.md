@@ -37,7 +37,14 @@ emotion2vec achieves SOTA or comparable results with SOTA models on multiple lan
 ### Performance on other speech emotion tasks
 Refer to the paper for more details.
 
-## Extract Features
+
+## Extract features
+### Download extracted features
+We provide the extracted features of popular emotion dataset IEMOCAP. The features are extracted from the last layer of emotion2vec. The features are stored in `.npy` format and the sample rate of the extracted features is 50Hz. The utterance-level features are computed by averaging the frame-level features.
+- frame-level: [Google Drive](https://drive.google.com/file/d/1JdQzwDJJEdKZcqSC1TXETvFZ7VpUvLEX/view?usp=sharing) | [Baidu Netdisk](https://pan.baidu.com/s/1FtCwhUwhONaeEos4nLYFWw?pwd=zb3p) (password: zb3p)
+- utterance-level: [Google Drive](https://drive.google.com/file/d/1jJVfoEKC8yjwj39F__8jIQayd5PBO0WD/view?usp=sharing) | [Baidu Netdisk](https://pan.baidu.com/s/1AsJHacD6a5h27YJiCSee4w?pwd=qu3u) (password: qu3u)
+
+### Extract features from your dataset
 1. git clone repos.
 ```bash
 git clone https://github.com/pytorch/fairseq

@@ -15,6 +15,7 @@ def get_parser():
     parser.add_argument('--target_file', help='location of target npy files', required=True)
     parser.add_argument('--model_dir', type=str, help='pretrained model', required=True)
     parser.add_argument('--checkpoint_dir', type=str, help='checkpoint for pre-trained model', required=True)
+    parser.add_argument('granularity', type=str, help='which granularity to use, frame or utterance', required=True)
 
     return parser
 
@@ -31,6 +32,7 @@ def main():
     target_file = args.target_file
     model_dir = args.model_dir
     checkpoint_dir = args.checkpoint_dir
+    granularity = args.granularity
 
     model_path = UserDirModule(model_dir)
     fairseq.utils.import_user_module(model_path)
@@ -53,6 +55,12 @@ def main():
         try:
             feats = model.extract_features(source, padding_mask=None)
             feats = feats['x'].squeeze(0).cpu().numpy()
+            if granularity == 'frame':
+                feats = feats
+            elif granularity == 'utterance':
+                feats = np.mean(feats, axis=0)
+            else:
+                raise ValueError("Unknown granularity: {}".format(args.granularity))
             np.save(target_file, feats)
         except:
             Exception("Error in extracting features from {}".format(source_file))
