@@ -31,9 +31,9 @@ You will get 3 files in `$feat_path`:
 
 ### Download from Google Drive
 You can also download the processed data from:
-- `train.npy` [Google Drive]() | [Baidu Netdisk](https://pan.baidu.com/s/1kWpT2X5gVc6pYULN0WdSdg?pwd=hsjt) (password: hsjt)
-- `train.lengths` [Google Drive]() | [Baidu Netdisk](https://pan.baidu.com/s/1pa7GHnGyTZw_fi-U1y4YgA?pwd=a99c) (password: a99c)
-- `train.emo` [Google Drive]() | [Baidu Netdisk](https://pan.baidu.com/s/1A_DTIoC7VbTxly5HzUZfpw?pwd=j9xv) (password: j9xv)
+- `train.npy` [Google Drive](https://drive.google.com/file/d/1WI9rM9v-WIBKhzDRHWwkgvJNHY1ZkEhd/view?usp=sharing) | [Baidu Netdisk](https://pan.baidu.com/s/1kWpT2X5gVc6pYULN0WdSdg?pwd=hsjt) (password: hsjt)
+- `train.lengths` [Google Drive](https://drive.google.com/file/d/1wnPBKwxz19ucirrdjlvZdhqvjb3efaj2/view?usp=sharing) | [Baidu Netdisk](https://pan.baidu.com/s/1pa7GHnGyTZw_fi-U1y4YgA?pwd=a99c) (password: a99c)
+- `train.emo` [Google Drive](https://drive.google.com/file/d/1UQZwfGXqCh58XJaaOJsEvJH1cKNXAy-3/view?usp=sharing) | [Baidu Netdisk](https://pan.baidu.com/s/1A_DTIoC7VbTxly5HzUZfpw?pwd=j9xv) (password: j9xv)
 
 ## Train a downstream model
 We provide scripts for training a downstream model with only linear layers. We take leave-one-session-out 5-fold cross-validation as an example.

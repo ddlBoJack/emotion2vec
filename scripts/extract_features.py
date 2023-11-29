@@ -15,7 +15,7 @@ def get_parser():
     parser.add_argument('--target_file', help='location of target npy files', required=True)
     parser.add_argument('--model_dir', type=str, help='pretrained model', required=True)
     parser.add_argument('--checkpoint_dir', type=str, help='checkpoint for pre-trained model', required=True)
-    parser.add_argument('granularity', type=str, help='which granularity to use, frame or utterance', required=True)
+    parser.add_argument('--granularity', type=str, help='which granularity to use, frame or utterance', required=True)
 
     return parser
 
