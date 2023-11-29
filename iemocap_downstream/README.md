@@ -6,10 +6,12 @@
 
 ## Data processing and extract features
 ```bash
-IEMOCAP_ROOT=/mnt/lustre/sjtu/home/zsz01/data/SER/IEMOCAP_full_release
-manifest_path=/mnt/lustre/sjtu/home/zsz01/codes/emotion-recognition/manifest
-checkpoint=/mnt/lustre/sjtu/home/zym22/models/emotion2vec/audio2_base_libri_cp_iemocap_meld_cmumosei_msppodcast_mead_cls1_clstype_chunk10_warmup5000_lr75e-5/checkpoint_last.pt
-feat_path=/mnt/lustre/sjtu/home/zsz01/codes/emotion-recognition/feats/
+# set some Variable
+IEMOCAP_ROOT=/path/to/IEMOCAP_full_release
+manifest_path=/path/to/manifest
+checkpoint=/path/to/emotion2vec_ckpt
+feat_path=/path/to/feats/
+
 # 1. generate manifest and labels from raw dataset, replace iemocap_root and output_path
 bash scripts/iemocap_manifest_and_labels.sh $IEMOCAP_ROOT $manifest_path
 
