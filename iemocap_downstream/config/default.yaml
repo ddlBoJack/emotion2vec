@@ -1,0 +1,35 @@
+common:
+  device: 0
+  seed: 42
+
+dataset:
+  _name: IEMOCAP
+  feat_path: /path/to/feat_path
+  test_ratio: 0.2
+  batch_size: 128
+  fold: 5
+  eval_is_test: False
+
+optimization:
+  epoch: 100
+  lr: 5e-4
+  weight_decay: 1e-5
+  label_smooth: 0.0
+
+lr_scheduler:
+  _name: ??
+  warmup_updates: ??
+
+model:
+  _name: BaseModel # FusionModel or BaseModel
+  save_dir: /path/to/save
+
+defaults:  # disable output
+  - _self_  
+  - override hydra/hydra_logging: disabled  
+  - override hydra/job_logging: disabled  
+  
+hydra:  
+  output_subdir: null  
+  run:  
+    dir: .
