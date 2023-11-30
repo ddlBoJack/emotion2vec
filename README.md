@@ -70,7 +70,7 @@ emotion2vec  --checkpoint_dir ./ckpt/emotion2vec_base.pt --granularity utterance
 ```python
 import emotion2vec
 
-extractor = emotion2vec(checkpoint_dir="./ckpt/emotion2vec_base.pt", granularity="utterance")
+extractor = emotion2vec.extract_features(checkpoint_dir="./ckpt/emotion2vec_base.pt", granularity="utterance")
 
 feats = extractor(source_file="/root/emotion2vec/scripts/test.wav")
 ```

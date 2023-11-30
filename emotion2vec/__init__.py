@@ -1,0 +1,1 @@
+from emotion2vec.emotion2vec_cli import extract_features
