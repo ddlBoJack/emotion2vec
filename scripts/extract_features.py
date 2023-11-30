@@ -6,6 +6,7 @@ import soundfile as sf
 import torch
 import torch.nn.functional as F
 import fairseq
+import emotion2vec
 
 def get_parser():
     parser = argparse.ArgumentParser(
@@ -19,9 +20,9 @@ def get_parser():
 
     return parser
 
-@dataclass
-class UserDirModule:
-    user_dir: str
+# @dataclass
+# class UserDirModule:
+#     user_dir: str
 
 def main():
     parser = get_parser()
@@ -68,3 +69,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # import emotion2vec
+    # emo = emotion2vec.load()
+    # feats = emo("test.wav")
