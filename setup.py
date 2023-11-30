@@ -12,7 +12,7 @@ def get_readme():
     return readme
 
 
-MODULE_NAME = 'emo2vec'
+MODULE_NAME = 'emotion2vec'
 VERSION_NUM = '0.0.1'
 
 setuptools.setup(
@@ -32,9 +32,9 @@ setuptools.setup(
                       "soundfile",
                       "torch"
                       ],
-    packages=["emo2vec"],
+    packages=["emotion2vec"],
     keywords=[
-        'ssl,emotion'
+        'ssl,emotion,speech,emotion2vec'
     ],
     classifiers=[
         'Programming Language :: Python :: 3.6',
@@ -44,6 +44,6 @@ setuptools.setup(
         'Programming Language :: Python :: 3.10',
     ],
     entry_points={"console_scripts": [
-        "emo2vec = emo2vec.emo2vec_cli:main",
+        "emotion2vec = emotion2vec.emo2vec_cli:main",
     ]},
 )

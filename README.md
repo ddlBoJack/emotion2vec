@@ -49,15 +49,39 @@ All wav files are extracted from the original dataset for diverse downstream tas
 ### Extract features from your dataset
 1. git clone repos.
 ```bash
-pip install fairseq
-git clone https://github.com/ddlBoJack/emotion2vec.git
+pip install git+https://github.com/ddlBoJack/emotion2vec.git
 ```
 
 2. download emotion2vec checkpoint from:
 - [Google Drive](https://drive.google.com/file/d/10L4CEoEyt6mQrqdblDgDSfZETYvA9c2T/view?usp=sharing)
 - [Baidu Netdisk](https://pan.baidu.com/s/15zqmNTYa0mkEwlIom7DO3g?pwd=b9fq) (password: b9fq).
 
-3. modify `PYTHONPATH` and other command line arguments, and run `scripts/extract_features.sh`
+[//]: # (3. modify `PYTHONPATH` and other command line arguments, and run `scripts/extract_features.sh`)
+3. extract the emotion features
+
+### Command-line usage:
+
+```shell
+emotion2vec  --checkpoint_dir ./ckpt/emotion2vec_base.pt --granularity utterance --source_file /root/emotion2vec/scripts/test.wav --target_file /root/emotion2vec/scripts/test.npz
+```
+
+### Python programming usage:
+
+```python
+import emotion2vec
+
+extractor = emotion2vec(checkpoint_dir="./ckpt/emotion2vec_base.pt", granularity="utterance")
+
+feats = extractor(source_file="/root/emotion2vec/scripts/test.wav")
+```
+
+### API-reference
+
+- `checkpoint_dir`: emotion2vec checkpoint path, downloaded in step2.
+- `granularity`: 
+- `source_file`: wav file to extract emotion vector
+- `target_file`: the emotion vector saved file if set
+
 
 ## Training your downstream model
 We provide training scripts for IEMOCAP dataset in `iemocap_downstream`. You can modify the scripts to train your downstream model on other datasets.

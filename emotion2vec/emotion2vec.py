@@ -8,17 +8,16 @@ import torch
 import torch.nn.functional as F
 import fairseq
 
-
-def extract_features(emo2vec_dir: str = None, checkpoint_dir: str = None, granularity: str = None, **kwargs):
+def extract_features(emotion2vec_dir: str = None, checkpoint_dir: str = None, granularity: str = None, **kwargs):
 
     try:
-        import emo2vec
-        emo2vec_dir = os.path.dirname(emo2vec.__file__)
+        import emotion2vec
+        emotion2vec_dir = os.path.dirname(emotion2vec.__file__)
     except:
-        assert emo2vec_dir is not None, "Please pip install emo2vec, or define the emo2vec_dir"
+        assert emotion2vec_dir is not None, "Please pip install emotion2vec, or define the emotion2vec_dir"
 
-    # model_path = UserDirModule(model_dir)
-    fairseq.utils.import_user_module(emo2vec_dir)
+    emotion2vec_dir = UserDirModule(emotion2vec_dir)
+    fairseq.utils.import_user_module(emotion2vec_dir)
     model, cfg, task = fairseq.checkpoint_utils.load_model_ensemble_and_task([checkpoint_dir])
     model = model[0]
     model.eval()
@@ -36,6 +35,7 @@ def extract_features(emo2vec_dir: str = None, checkpoint_dir: str = None, granul
         if task.cfg.normalize:
             source = F.layer_norm(source, source.shape)
         source = source.view(1, -1)
+        feats = None
         try:
             feats = model.extract_features(source, padding_mask=None)
             feats = feats['x'].squeeze(0).cpu().numpy()
@@ -55,15 +55,15 @@ def extract_features(emo2vec_dir: str = None, checkpoint_dir: str = None, granul
     return _extract
     
 
-# @dataclass
-# class UserDirModule:
-#     user_dir: str
+@dataclass
+class UserDirModule:
+    user_dir: str
 
 def main():
     parser = argparse.ArgumentParser(
         description="extract emotion2vec features for downstream tasks"
     )
-    parser.add_argument('--emo2vec_dir', type=str, default="/Users/zhifu/emotion2vec/emo2vec", help='emo2vec_dir for source code', required=False)
+    parser.add_argument('--emotion2vec_dir', type=str, default="/Users/zhifu/emotion2vec/emotion2vec", help='emotion2vec_dir for source code', required=False)
     parser.add_argument('--checkpoint_dir', type=str, default="/Users/zhifu/Downloads/emotion2vec_base.pt", help='checkpoint for pre-trained model', required=False)
     parser.add_argument('--granularity', type=str, default="utterance", help='which granularity to use, frame or utterance',
                         required=False)
@@ -73,7 +73,7 @@ def main():
     args = parser.parse_args()
     print(args)
 
-    extractor = extract_features(emo2vec_dir=args.emo2vec_dir, checkpoint_dir=args.checkpoint_dir, granularity=args.granularity)
+    extractor = extract_features(emotion2vec_dir=args.emotion2vec_dir, checkpoint_dir=args.checkpoint_dir, granularity=args.granularity)
     extractor(args.source_file, args.target_file)
 
 
