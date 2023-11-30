@@ -54,8 +54,8 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 ```
 
 2. download emotion2vec checkpoint from:
-- [Google Drive](https://drive.google.com/file/d/1vzJdLTogkbhGc_ncNUc6xH2riS8oDGDI/view?usp=sharing)
-- [Baidu Netdisk](https://pan.baidu.com/s/1-KXR6Zhl6VxxddQbKf5YJQ?pwd=1jny) (password: 1jny).
+- [Google Drive](https://drive.google.com/file/d/10L4CEoEyt6mQrqdblDgDSfZETYvA9c2T/view?usp=sharing)
+- [Baidu Netdisk](https://pan.baidu.com/s/15zqmNTYa0mkEwlIom7DO3g?pwd=b9fq) (password: b9fq).
 
 3. modify `PYTHONPATH` and other command line arguments, and run `scripts/extract_features.sh`
 
