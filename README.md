@@ -49,9 +49,7 @@ All wav files are extracted from the original dataset for diverse downstream tas
 ### Extract features from your dataset
 1. git clone repos.
 ```bash
-git clone https://github.com/pytorch/fairseq
-cd fairseq
-pip install --editable ./
+pip install fairseq
 git clone https://github.com/ddlBoJack/emotion2vec.git
 ```
 
@@ -59,7 +57,7 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 - [Google Drive](https://drive.google.com/file/d/1vzJdLTogkbhGc_ncNUc6xH2riS8oDGDI/view?usp=sharing)
 - [Baidu Netdisk](https://pan.baidu.com/s/1-KXR6Zhl6VxxddQbKf5YJQ?pwd=1jny) (password: 1jny).
 
-3. modify and run `scripts/extract_features.sh`
+3. modify `PYTHONPATH` and other command line arguments, and run `scripts/extract_features.sh`
 
 ## Training your downstream model
 We provide training scripts for IEMOCAP dataset in `iemocap_downstream`. You can modify the scripts to train your downstream model on other datasets.
