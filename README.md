@@ -31,7 +31,7 @@ The paper is coming soon.
 emotion2vec achieves SOTA with only linear layers on the mainstream IEMOCAP dataset. 
 ![](./src/IEMOCAP.jpg)
 
-### Performance on other datasets
+### Performance on other languages
 emotion2vec achieves SOTA compared with SOTA SSL models on multiple languages (Mandarin, French, German, Italian, etc.). Refer to the paper for more details.
 ![](./src/Languages.jpg)
 
