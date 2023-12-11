@@ -29,10 +29,11 @@ The paper is coming soon.
 ## Performance
 ### Performance on IEMOCAP
 emotion2vec achieves SOTA with only linear layers on the mainstream IEMOCAP dataset. 
-![](./src/IEMOCAP.png)
+![](./src/IEMOCAP.jpg)
 
 ### Performance on other datasets
-emotion2vec achieves SOTA or comparable results with SOTA models on multiple languages (Mandarin, French, German, Italian, etc.). Refer to the paper for more details.
+emotion2vec achieves SOTA compared with SOTA SSL models on multiple languages (Mandarin, French, German, Italian, etc.). Refer to the paper for more details.
+![](./src/Languages.jpg)
 
 ### Performance on other speech emotion tasks
 Refer to the paper for more details.
@@ -47,6 +48,7 @@ We provide the extracted features of popular emotion dataset IEMOCAP. The featur
 All wav files are extracted from the original dataset for diverse downstream tasks. If want to train with standard 5531 utterances for 4 emotions classification, please refer to `iemocap_downstream`.
 
 ### Extract features from your dataset
+The minimum environment requirements are `python>=3.8` and `torch>=1.13`. Our testing environments are `python=3.8` and `torch=2.01`.
 1. git clone repos.
 ```bash
 pip install fairseq
@@ -57,7 +59,7 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 - [Google Drive](https://drive.google.com/file/d/10L4CEoEyt6mQrqdblDgDSfZETYvA9c2T/view?usp=sharing)
 - [Baidu Netdisk](https://pan.baidu.com/s/15zqmNTYa0mkEwlIom7DO3g?pwd=b9fq) (password: b9fq).
 
-3. modify `PYTHONPATH` and other command line arguments, and run `scripts/extract_features.sh`
+3. modify and run `scripts/extract_features.sh`
 
 ## Training your downstream model
 We provide training scripts for IEMOCAP dataset in `iemocap_downstream`. You can modify the scripts to train your downstream model on other datasets.
