@@ -18,17 +18,17 @@
     <a href="https://github.com/ddlBoJack/MT4SSL"><img src="https://img.shields.io/badge/License-MIT-red.svg" alt="mit"></a>
 </div>
 
+## News
+- 🆕 We release the [paper](https://arxiv.org/abs/2312.15185), and create a [WeChat group](./src/Wechat.jpg) for emotion2vec. 
+- We release code, checkpoints, and extracted features for emotion2vec. 
+
 ## Guides
 
 emotion2vec is the first universal speech emotion representation model. Through self-supervised pre-training, emotion2vec has the ability to extract emotion representation across different tasks, languages, and scenarios.
 
-
-## Model
-The paper is coming soon.
-
 ## Performance
 ### Performance on IEMOCAP
-emotion2vec achieves SOTA with only linear layers on the mainstream IEMOCAP dataset. 
+emotion2vec achieves SOTA with only linear layers on the mainstream IEMOCAP dataset. Refer to the paper for more details.
 ![](./src/IEMOCAP.png)
 
 ### Performance on other languages
@@ -38,6 +38,9 @@ emotion2vec achieves SOTA compared with SOTA SSL models on multiple languages (M
 ### Performance on other speech emotion tasks
 Refer to the paper for more details.
 
+## Visualization
+UMAP visualizations of learned features on the IEMOCAP dataset. <span style="color:red;">Red</span> and <span style="color:blue;">Blue</span> tones mean low and high arousal emotional classes, respectively.  Refer to the paper for more details. 
+![](./src/UMAP.png)
 
 ## Extract features
 ### Download extracted features
@@ -45,7 +48,7 @@ We provide the extracted features of popular emotion dataset IEMOCAP. The featur
 - frame-level: [Google Drive](https://drive.google.com/file/d/1JdQzwDJJEdKZcqSC1TXETvFZ7VpUvLEX/view?usp=sharing) | [Baidu Netdisk](https://pan.baidu.com/s/1FtCwhUwhONaeEos4nLYFWw?pwd=zb3p) (password: zb3p)
 - utterance-level: [Google Drive](https://drive.google.com/file/d/1jJVfoEKC8yjwj39F__8jIQayd5PBO0WD/view?usp=sharing) | [Baidu Netdisk](https://pan.baidu.com/s/1AsJHacD6a5h27YJiCSee4w?pwd=qu3u) (password: qu3u)
 
-All wav files are extracted from the original dataset for diverse downstream tasks. If want to train with standard 5531 utterances for 4 emotions classification, please refer to `iemocap_downstream`.
+All wav files are extracted from the original dataset for diverse downstream tasks. If want to train with standard 5531 utterances for 4 emotions classification, please refer to the `iemocap_downstream` folder.
 
 ### Extract features from your dataset
 The minimum environment requirements are `python>=3.8` and `torch>=1.13`. Our testing environments are `python=3.8` and `torch=2.01`.
@@ -62,4 +65,15 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 3. modify and run `scripts/extract_features.sh`
 
 ## Training your downstream model
-We provide training scripts for IEMOCAP dataset in `iemocap_downstream`. You can modify the scripts to train your downstream model on other datasets.
+We provide training scripts for IEMOCAP dataset in the `iemocap_downstream` folder. You can modify the scripts to train your downstream model on other datasets.
+
+## Citation
+If you find our emotion2vec code and paper useful, please kindly cite:
+```
+@article{ma2023emotion2vec,
+  title={emotion2vec: Self-Supervised Pre-Training for Speech Emotion Representation},
+  author={Ziyang Ma and Zhisheng Zheng and Jiaxin Ye and Jinchao Li and Zhifu Gao and Shiliang Zhang and Xie Chen},
+  journal={arXiv preprint arXiv:2312.15185},
+  year={2023}
+}
+```
