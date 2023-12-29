@@ -567,7 +567,7 @@ def get_alibi(
     if dims == 1:
         # prepare alibi position linear bias. Note that wav2vec2 is non
         # autoregressive model so we want a symmetric mask with 0 on the
-        # diagonal and other wise linear decreasing valuees
+        # diagonal and other wise linear decreasing values
         pos_bias = (
             torch.abs(
                 torch.arange(maxpos).unsqueeze(0) - torch.arange(maxpos).unsqueeze(1)
