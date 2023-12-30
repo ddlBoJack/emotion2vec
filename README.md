@@ -72,7 +72,7 @@ If you find our emotion2vec code and paper useful, please kindly cite:
 ```
 @article{ma2023emotion2vec,
   title={emotion2vec: Self-Supervised Pre-Training for Speech Emotion Representation},
-  author={Ziyang Ma and Zhisheng Zheng and Jiaxin Ye and Jinchao Li and Zhifu Gao and Shiliang Zhang and Xie Chen},
+  author={Ma, Ziyang and Zheng, Zhisheng and Ye, Jiaxin and Li, Jinchao and Gao, Zhifu and Zhang, Shiliang and Chen, Xie},
   journal={arXiv preprint arXiv:2312.15185},
   year={2023}
 }
