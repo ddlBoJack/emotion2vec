@@ -61,6 +61,7 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 2. download emotion2vec checkpoint from:
 - [Google Drive](https://drive.google.com/file/d/10L4CEoEyt6mQrqdblDgDSfZETYvA9c2T/view?usp=sharing)
 - [Baidu Netdisk](https://pan.baidu.com/s/15zqmNTYa0mkEwlIom7DO3g?pwd=b9fq) (password: b9fq).
+- [modelscope](https://www.modelscope.cn/models/damo/emotion2vec_base/summary): `git clone https://www.modelscope.cn/damo/emotion2vec_base.git`
 
 3. modify and run `scripts/extract_features.sh`
 
