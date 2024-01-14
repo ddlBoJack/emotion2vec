@@ -22,15 +22,13 @@ def count_parameters(model):
         total_params += param
     print(f"\nTotal number of parameters: {total_params}")
 
-
 @hydra.main(config_path='config', config_name='default.yaml', version_base="1.2")
 def train_iemocap(cfg: DictConfig):
     torch.manual_seed(cfg.common.seed)
 
-    if cfg.dataset._name == 'IEMOCAP':
-        label_dict={'ang': 0, 'hap': 1, 'neu': 2, 'sad': 3}
-        fold_sizes = [1085, 1023, 1151, 1031, 1241] # Session1, 2, 3, 4, 5
-        fold_list = [0, 1, 2, 3, 4]
+    label_dict={'ang': 0, 'hap': 1, 'neu': 2, 'sad': 3}
+    n_samples = [1085, 1023, 1151, 1031, 1241] # Session1, 2, 3, 4, 5
+    idx_sessions = [0, 1, 2, 3, 4]
 
     test_wa_avg, test_ua_avg, test_f1_avg = 0., 0., 0.
     
@@ -47,17 +45,15 @@ def train_iemocap(cfg: DictConfig):
     )
     logger = logging.getLogger(cfg.dataset._name)
 
-    for fold in fold_list:# [4, 3, 2, 1, 0] latter 20% first
+    for fold in fold_list: # extract the $fold$th as test set
         logger.info(f"------Now it's {fold+1}th fold------")
 
         torch.cuda.set_device(cfg.common.device)
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         torch.cuda.empty_cache()
         
-        dataset = load_ssl_features(
-            cfg.dataset.feat_path,
-            label_dict
-        )
+        dataset = load_ssl_features(cfg.dataset.feat_path, label_dict)
+
         test_len = fold_sizes[fold] 
         test_idx_start = sum(fold_sizes[:fold])
         test_idx_end = test_idx_start + test_len 
@@ -69,11 +65,7 @@ def train_iemocap(cfg: DictConfig):
             eval_is_test=cfg.dataset.eval_is_test,
         )
 
-        model = BaseModel(
-            input_dim=768, 
-            output_dim=len(label_dict),
-        )
-
+        model = BaseModel(input_dim=768, output_dim=len(label_dict))
         model = model.to(device)
 
         # count_parameters(model)
