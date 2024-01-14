@@ -70,6 +70,10 @@ def validate_and_test(model, data_loader, device, num_classes):
 
     return weighted_acc, unweighted_acc, weighted_f1
 
+def inference(model, ):
+    pass
+
+
 def compute_unweighted_accuracy(list1, list2):
     result = []
     for i in range(len(list1)):
