@@ -1,5 +1,4 @@
 common:
-  device: 0
   seed: 42
 
 dataset:
@@ -21,15 +20,4 @@ lr_scheduler:
   warmup_updates: ??
 
 model:
-  _name: BaseModel # FusionModel or BaseModel
-  save_dir: /path/to/save
-
-defaults:  # disable output
-  - _self_  
-  - override hydra/hydra_logging: disabled  
-  - override hydra/job_logging: disabled  
-  
-hydra:  
-  output_subdir: null  
-  run:  
-    dir: .
+  _name: BaseModel 

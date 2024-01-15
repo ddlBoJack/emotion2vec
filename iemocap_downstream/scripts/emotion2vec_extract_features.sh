@@ -3,8 +3,7 @@ export CUDA_LAUNCH_BLOCKING=1
 export HYDRA_FULL_ERROR=1
 export CUDA_VISIBLE_DEVICES=0
 
-fairseq_root=$1
-export PYTHONPATH=$fairseq_root:$PYTHONPATH
+export PYTHONPATH=$1:$PYTHONPATH
 
 manifest_path=$2
 model_path=$3
@@ -13,7 +12,6 @@ save_dir=$5
 
 # Here we only extract the last layer
 for layer in {11..11}; do 
-
     true_layer=$[$layer+1]
     echo "Extracting features from layer $true_layer"
 

@@ -14,7 +14,7 @@ manifest_path=/path/to/manifest
 checkpoint_path=/path/to/emotion2vec_ckpt
 feat_path=/path/to/feats
 fairseq_root=/path/to/fairseq_root
-model_path=/path/to/emotion2vec_model_file
+model_path=../upstream # /path/to/emotion2vec/upstream
 
 # generate manifest and labels from raw dataset
 bash scripts/iemocap_manifest_and_labels.sh $IEMOCAP_ROOT $manifest_path
@@ -39,7 +39,9 @@ You can also download the processed data from:
 We provide scripts for training a downstream model with only linear layers. We take leave-one-session-out 5-fold cross-validation as an example.
 ```bash
 feat_path=/path/to/feats
-save_dir=/path/to/save_dir
-bash train.sh ${feat_path}/train $save_dir
+bash train.sh ${feat_path}/train
 ```
 As frame-level features are provided, you can implement more complex downstream models for further  performance improvements.
+
+## Inference
+Take a look at `inference.ipynb`.

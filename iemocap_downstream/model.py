@@ -1,8 +1,5 @@
-import numpy as np
-
 import torch
 from torch import nn
-
 
 class BaseModel(nn.Module):
     def __init__(self, input_dim=768, output_dim=4):
