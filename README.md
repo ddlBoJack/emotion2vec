@@ -19,7 +19,8 @@
 </div>
 
 ## News
-- 🆕 We release the [paper](https://arxiv.org/abs/2312.15185), and create a [WeChat group](./src/Wechat.jpg) for emotion2vec. 
+- emotion2vec has been integrated into [modelscope](https://www.modelscope.cn/models/damo/emotion2vec_base/summary).  
+- We release the [paper](https://arxiv.org/abs/2312.15185), and create a [WeChat group](./src/Wechat.jpg) for emotion2vec. 
 - We release code, checkpoints, and extracted features for emotion2vec. 
 
 ## Guides
@@ -51,6 +52,7 @@ We provide the extracted features of popular emotion dataset IEMOCAP. The featur
 All wav files are extracted from the original dataset for diverse downstream tasks. If want to train with standard 5531 utterances for 4 emotions classification, please refer to the `iemocap_downstream` folder.
 
 ### Extract features from your dataset
+#### Install from the source code
 The minimum environment requirements are `python>=3.8` and `torch>=1.13`. Our testing environments are `python=3.8` and `torch=2.01`.
 1. git clone repos.
 ```bash
@@ -60,10 +62,30 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 
 2. download emotion2vec checkpoint from:
 - [Google Drive](https://drive.google.com/file/d/10L4CEoEyt6mQrqdblDgDSfZETYvA9c2T/view?usp=sharing)
-- [Baidu Netdisk](https://pan.baidu.com/s/15zqmNTYa0mkEwlIom7DO3g?pwd=b9fq) (password: b9fq).
+- [Baidu Netdisk](https://pan.baidu.com/s/15zqmNTYa0mkEwlIom7DO3g?pwd=b9fq) (password: b9fq)
 - [modelscope](https://www.modelscope.cn/models/damo/emotion2vec_base/summary): `git clone https://www.modelscope.cn/damo/emotion2vec_base.git`
 
 3. modify and run `scripts/extract_features.sh`
+
+#### Install from modelscope
+1. git clone repos.
+```bash
+pip install modelscope
+git clone -b main --single-branch https://github.com/alibaba-damo-academy/FunASR.git
+cd FunASR
+pip install -e ./
+```
+
+2. run the code.
+```python
+from funasr import AutoModel
+
+model = AutoModel(model="damo/emotion2vec_base", model_revision="v2.0.1")
+wav_file = f"{model.model_path}/example/example/test.wav"
+res = model.generate(wav_file, output_dir="./outputs", granularity="utterance")
+print(res)
+```
+The model will be downloaded automatically from [modelscope](https://www.modelscope.cn/models/damo/emotion2vec_base/summary).
 
 ## Training your downstream model
 We provide training scripts for IEMOCAP dataset in the `iemocap_downstream` folder. You can modify the scripts to train your downstream model on other datasets.
