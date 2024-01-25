@@ -19,7 +19,7 @@
 </div>
 
 ## News
-- emotion2vec has been integrated into [modelscope](https://www.modelscope.cn/models/damo/emotion2vec_base/summary).  
+- emotion2vec has been integrated into [modelscope](https://www.modelscope.cn/models/iic/emotion2vec_base/summary) and [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/funasr1.0/examples/industrial_data_pretraining/emotion2vec).  
 - We release the [paper](https://arxiv.org/abs/2312.15185), and create a [WeChat group](./src/Wechat.jpg) for emotion2vec. 
 - We release code, checkpoints, and extracted features for emotion2vec. 
 
@@ -68,24 +68,51 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 3. modify and run `scripts/extract_features.sh`
 
 #### Install from modelscope
-1. git clone repos.
+1. install modelscope and funasr
 ```bash
-pip install modelscope
-git clone -b main --single-branch https://github.com/alibaba-damo-academy/FunASR.git
-cd FunASR
-pip install -e ./
+pip install -U modelscope>=1.11.1 funasr>=1.0.0
+```
+
+2. run the code.
+```python
+from modelscope.pipelines import pipeline
+from modelscope.utils.constant import Tasks
+
+inference_pipeline = pipeline(
+    task=Tasks.emotion_recognition,
+    model="iic/emotion2vec_base", model_revision="v2.0.4")
+
+rec_result = inference_pipeline('https://isv-data.oss-cn-hangzhou.aliyuncs.com/ics/MaaS/ASR/test_audio/asr_example_zh.wav', output_dir="./outputs", granularity="utterance")
+print(rec_result)
+```
+The model will be downloaded automatically.
+
+Refer to [modelscope](https://www.modelscope.cn/models/damo/emotion2vec_base/summary) for more details.
+
+#### Install from FunASR
+1. install funasr
+```bash
+pip install funasr>=1.0.0
 ```
 
 2. run the code.
 ```python
 from funasr import AutoModel
 
-model = AutoModel(model="damo/emotion2vec_base", model_revision="v2.0.1")
-wav_file = f"{model.model_path}/example/example/test.wav"
-res = model.generate(wav_file, output_dir="./outputs", granularity="utterance")
+model = AutoModel(model="iic/emotion2vec_base", model_revision="v2.0.4")
+
+res = model(input='https://isv-data.oss-cn-hangzhou.aliyuncs.com/ics/MaaS/ASR/test_audio/asr_example_zh.wav', output_dir="./outputs", granularity="utterance")
 print(res)
 ```
-The model will be downloaded automatically from [modelscope](https://www.modelscope.cn/models/damo/emotion2vec_base/summary).
+The model will be downloaded automatically.
+
+FunASR support file list input in wav.scp (kaldi style):
+```
+wav_name1 wav_path1.wav
+wav_name2 wav_path2.wav
+...
+```
+Refer to [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/funasr1.0/examples/industrial_data_pretraining/emotion2vec) for more details.
 
 ## Training your downstream model
 We provide training scripts for IEMOCAP dataset in the `iemocap_downstream` folder. You can modify the scripts to train your downstream model on other datasets.
