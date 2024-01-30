@@ -19,7 +19,8 @@
 </div>
 
 ## News
-- emotion2vec has been integrated into [modelscope](https://www.modelscope.cn/models/iic/emotion2vec_base/summary) and [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/funasr1.0/examples/industrial_data_pretraining/emotion2vec).  
+- 8-class emotion recognition model with iterative fine-tuning from emotion2vec has been released in [modelscope](https://www.modelscope.cn/models/iic/emotion2vec_base_finetuned/summary) and [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/main/examples/industrial_data_pretraining/emotion2vec).  
+- emotion2vec has been integrated into [modelscope](https://www.modelscope.cn/models/iic/emotion2vec_base/summary) and [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/main/examples/industrial_data_pretraining/emotion2vec).  
 - We release the [paper](https://arxiv.org/abs/2312.15185), and create a [WeChat group](./src/Wechat.jpg) for emotion2vec. 
 - We release code, checkpoints, and extracted features for emotion2vec. 
 
@@ -67,10 +68,11 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 
 3. modify and run `scripts/extract_features.sh`
 
-#### Install from modelscope
+#### Install from modelscope (Recommended)
+
 1. install modelscope and funasr
 ```bash
-pip install -U modelscope>=1.11.1 funasr>=1.0.0
+pip install -U modelscope>=1.11.1 funasr>=1.0.4
 ```
 
 2. run the code.
@@ -78,30 +80,88 @@ pip install -U modelscope>=1.11.1 funasr>=1.0.0
 from modelscope.pipelines import pipeline
 from modelscope.utils.constant import Tasks
 
+'''
+Using the emotion representation model
+rec_result only contains {'feats'}
+	granularity="utterance": {'feats': [*768]}
+	granularity="frame": {feats: [T*768]}
+'''
 inference_pipeline = pipeline(
     task=Tasks.emotion_recognition,
     model="iic/emotion2vec_base", model_revision="v2.0.4")
-
 rec_result = inference_pipeline('https://isv-data.oss-cn-hangzhou.aliyuncs.com/ics/MaaS/ASR/test_audio/asr_example_zh.wav', output_dir="./outputs", granularity="utterance")
+print(rec_result)
+
+'''
+Using the finetuned emotion recognization model
+rec_result contains {'feats', 'labels', 'scores'}
+	extract_embedding=False: 8-class emotions with scores
+	extract_embedding=True: 8-class emotions with scores, along with features
+
+8-class emotions:
+    0: angry
+    1: disgusted
+    2: fearful
+    3: happy
+    4: neutral
+    5: other
+    6: sad
+    7: surprised
+    8: unknown
+'''
+inference_pipeline = pipeline(
+    task=Tasks.emotion_recognition,
+    model="iic/emotion2vec_base_finetuned", model_revision="v2.0.4")
+rec_result = inference_pipeline('https://isv-data.oss-cn-hangzhou.aliyuncs.com/ics/MaaS/ASR/test_audio/asr_example_zh.wav', output_dir="./outputs", granularity="utterance", extract_embedding=False)
 print(rec_result)
 ```
 The model will be downloaded automatically.
 
-Refer to [modelscope](https://www.modelscope.cn/models/damo/emotion2vec_base/summary) for more details.
+Refer to model scope of [emotion2vec_base](https://www.modelscope.cn/models/damo/emotion2vec_base/summary) and [emotion2vec_base_finetuned](https://www.modelscope.cn/models/iic/emotion2vec_base_finetuned/summary) for more details.
+
+
 
 #### Install from FunASR
 1. install funasr
 ```bash
-pip install funasr>=1.0.0
+pip install funasr>=1.0.4
 ```
 
 2. run the code.
 ```python
 from funasr import AutoModel
 
+'''
+Using the emotion representation model
+rec_result only contains {'feats'}
+	granularity="utterance": {'feats': [*768]}
+	granularity="frame": {feats: [T*768]}
+'''
 model = AutoModel(model="iic/emotion2vec_base", model_revision="v2.0.4")
+wav_file = f"{model.model_path}/example/test.wav"
+rec_result = model.generate(wav_file, output_dir="./outputs", granularity="utterance")
+print(res)
 
-res = model(input='https://isv-data.oss-cn-hangzhou.aliyuncs.com/ics/MaaS/ASR/test_audio/asr_example_zh.wav', output_dir="./outputs", granularity="utterance")
+'''
+Using the finetuned emotion recognization model
+rec_result contains {'feats', 'labels', 'scores'}
+	extract_embedding=False: 8-class emotions with scores
+	extract_embedding=True: 8-class emotions with scores, along with features
+
+8-class emotions:
+    0: angry
+    1: disgusted
+    2: fearful
+    3: happy
+    4: neutral
+    5: other
+    6: sad
+    7: surprised
+    8: unknown
+'''
+model = AutoModel(model="iic/emotion2vec_base_finetuned", model_revision="v2.0.4")
+wav_file = f"{model.model_path}/example/test.wav"
+rec_result = model.generate(wav_file, output_dir="./outputs", granularity="utterance", extract_embedding=False)
 print(res)
 ```
 The model will be downloaded automatically.
@@ -112,7 +172,7 @@ wav_name1 wav_path1.wav
 wav_name2 wav_path2.wav
 ...
 ```
-Refer to [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/funasr1.0/examples/industrial_data_pretraining/emotion2vec) for more details.
+Refer to [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/main/examples/industrial_data_pretraining/emotion2vec) for more details.
 
 ## Training your downstream model
 We provide training scripts for IEMOCAP dataset in the `iemocap_downstream` folder. You can modify the scripts to train your downstream model on other datasets.
