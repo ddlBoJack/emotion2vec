@@ -72,7 +72,7 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 
 1. install modelscope and funasr
 ```bash
-pip install -U modelscope>=1.11.1 funasr>=1.0.4
+pip install -U modelscope>=1.11.1 funasr>=1.0.5
 ```
 
 2. run the code.
@@ -124,7 +124,7 @@ Refer to model scope of [emotion2vec_base](https://www.modelscope.cn/models/damo
 #### Install from FunASR
 1. install funasr
 ```bash
-pip install funasr>=1.0.4
+pip install funasr>=1.0.5
 ```
 
 2. run the code.
