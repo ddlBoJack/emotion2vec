@@ -140,7 +140,7 @@ rec_result only contains {'feats'}
 model = AutoModel(model="iic/emotion2vec_base", model_revision="v2.0.4")
 wav_file = f"{model.model_path}/example/test.wav"
 rec_result = model.generate(wav_file, output_dir="./outputs", granularity="utterance")
-print(res)
+print(rec_result)
 
 '''
 Using the finetuned emotion recognization model
@@ -162,7 +162,7 @@ rec_result contains {'feats', 'labels', 'scores'}
 model = AutoModel(model="iic/emotion2vec_base_finetuned", model_revision="v2.0.4")
 wav_file = f"{model.model_path}/example/test.wav"
 rec_result = model.generate(wav_file, output_dir="./outputs", granularity="utterance", extract_embedding=False)
-print(res)
+print(rec_result)
 ```
 The model will be downloaded automatically.
 
