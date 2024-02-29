@@ -19,7 +19,7 @@
 </div>
 
 ## News
-- 9-class emotion recognition model with iterative fine-tuning from emotion2vec has been released in [modelscope](https://www.modelscope.cn/models/iic/emotion2vec_base_finetuned/summary) and [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/main/examples/industrial_data_pretraining/emotion2vec).  
+- 9-class emotion recognition model with iterative fine-tuning (**with more than 10k hours of speech**) from emotion2vec has been released in [modelscope](https://www.modelscope.cn/models/iic/emotion2vec_base_finetuned/summary) and [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/main/examples/industrial_data_pretraining/emotion2vec).  
 - emotion2vec has been integrated into [modelscope](https://www.modelscope.cn/models/iic/emotion2vec_base/summary) and [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/main/examples/industrial_data_pretraining/emotion2vec).  
 - We release the [paper](https://arxiv.org/abs/2312.15185), and create a [WeChat group](./src/Wechat.jpg) for emotion2vec. 
 - We release code, checkpoints, and extracted features for emotion2vec. 
