@@ -119,7 +119,7 @@ from modelscope.utils.constant import Tasks
 
 inference_pipeline = pipeline(
     task=Tasks.emotion_recognition,
-    model="iic/emotion2vec_large")  # Alternative: iic/emotion2vec_plus_seed, iic/emotion2vec_plus_base, iic/emotion2vec_plus_large and iic/emotion2vec_base_finetuned
+    model="iic/emotion2vec_plus_large")  # Alternative: iic/emotion2vec_plus_seed, iic/emotion2vec_plus_base, iic/emotion2vec_plus_large and iic/emotion2vec_base_finetuned
 
 rec_result = inference_pipeline('https://isv-data.oss-cn-hangzhou.aliyuncs.com/ics/MaaS/ASR/test_audio/asr_example_zh.wav', output_dir="./outputs", granularity="utterance", extract_embedding=False)
 print(rec_result)
