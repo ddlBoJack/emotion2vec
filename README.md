@@ -84,7 +84,7 @@ Performance on [EmoBox](https://github.com/emo-box/EmoBox) for 4-class primary e
 
 ## Inference with checkpoints
 
-### Install from modelscope (Recommended)
+### Install from modelscope
 
 1. install modelscope and funasr
 ```bash
@@ -129,7 +129,7 @@ The model will be downloaded automatically.
 
 
 
-### Install from FunASR
+### Install from FunASR (Recommended)
 1. install funasr
 ```bash
 pip install -U funasr
@@ -223,7 +223,7 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 
 3. modify and run `scripts/extract_features.sh`
 
-#### Install from modelscope (Recommended)
+#### Install from modelscope
 
 1. install modelscope and funasr
 ```bash
@@ -244,7 +244,8 @@ from modelscope.utils.constant import Tasks
 
 inference_pipeline = pipeline(
     task=Tasks.emotion_recognition,
-    model="iic/emotion2vec_base")
+    model="iic/emotion2vec_base",
+    model_revision="master")
 
 rec_result = inference_pipeline('https://isv-data.oss-cn-hangzhou.aliyuncs.com/ics/MaaS/ASR/test_audio/asr_example_zh.wav', output_dir="./outputs", granularity="utterance")
 print(rec_result)
@@ -255,7 +256,7 @@ Refer to model scope of [emotion2vec_base](https://www.modelscope.cn/models/damo
 
 
 
-#### Install from FunASR
+#### Install from FunASR (Recommended)
 1. install funasr
 ```bash
 pip install -U funasr
