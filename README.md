@@ -55,7 +55,6 @@ GitHub Repo: [emotion2vec](https://github.com/ddlBoJack/emotion2vec)
     - [Download extracted features](#download-extracted-features)
     - [Extract features from your dataset](#extract-features-from-your-dataset)
       - [Install from the source code](#install-from-the-source-code)
-      - [Install from modelscope (Recommended)](#install-from-modelscope-recommended-1)
       - [Install from FunASR](#install-from-funasr-1)
   - [Training your downstream model](#training-your-downstream-model)
   - [Citation](#citation)
@@ -160,7 +159,16 @@ iic/emotion2vec_base_finetuned (Jan. 2024 release)
 
 from funasr import AutoModel
 
-model = AutoModel(model="iic/emotion2vec_base_finetuned") # Alternative: iic/emotion2vec_plus_seed, iic/emotion2vec_plus_base, iic/emotion2vec_plus_large and iic/emotion2vec_base_finetuned
+# model="iic/emotion2vec_base"
+# model="iic/emotion2vec_base_finetuned"
+# model="iic/emotion2vec_plus_seed"
+# model="iic/emotion2vec_plus_base"
+model = "iic/emotion2vec_plus_large"
+
+model = AutoModel(
+    model=model,
+    hub="ms",  # "ms" or "modelscope" for Mainland China users; "hf" or "huggingface" for Other overseas users
+)
 
 wav_file = f"{model.model_path}/example/test.wav"
 rec_result = model.generate(wav_file, output_dir="./outputs", granularity="utterance", extract_embedding=False)
@@ -223,40 +231,9 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 
 3. modify and run `scripts/extract_features.sh`
 
-#### Install from modelscope
-
-1. install modelscope and funasr
-```bash
-pip install -U funasr modelscope
-```
-
-2. run the code.
-```python
-'''
-Using the emotion representation model
-rec_result only contains {'feats'}
-	granularity="utterance": {'feats': [*768]}
-	granularity="frame": {feats: [T*768]}
-'''
-
-from modelscope.pipelines import pipeline
-from modelscope.utils.constant import Tasks
-
-inference_pipeline = pipeline(
-    task=Tasks.emotion_recognition,
-    model="iic/emotion2vec_base",
-    model_revision="master")
-
-rec_result = inference_pipeline('https://isv-data.oss-cn-hangzhou.aliyuncs.com/ics/MaaS/ASR/test_audio/asr_example_zh.wav', output_dir="./outputs", granularity="utterance")
-print(rec_result)
-```
-The model will be downloaded automatically.
-
-Refer to model scope of [emotion2vec_base](https://www.modelscope.cn/models/damo/emotion2vec_base/summary) and [emotion2vec_base_finetuned](https://www.modelscope.cn/models/iic/emotion2vec_base_finetuned/summary) for more details.
 
 
-
-#### Install from FunASR (Recommended)
+#### Install from FunASR
 1. install funasr
 ```bash
 pip install -U funasr
@@ -273,7 +250,16 @@ rec_result only contains {'feats'}
 
 from funasr import AutoModel
 
-model = AutoModel(model="iic/emotion2vec_base")
+# model="iic/emotion2vec_base"
+# model="iic/emotion2vec_base_finetuned"
+# model="iic/emotion2vec_plus_seed"
+# model="iic/emotion2vec_plus_base"
+model = "iic/emotion2vec_plus_large"
+
+model = AutoModel(
+    model=model,
+    hub="ms",  # "ms" or "modelscope" for Mainland China users; "hf" or "huggingface" for Other overseas users
+)
 
 wav_file = f"{model.model_path}/example/test.wav"
 rec_result = model.generate(wav_file, output_dir="./outputs", granularity="utterance")
