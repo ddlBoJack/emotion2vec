@@ -18,7 +18,7 @@
 </div>
 
 # News
-
+- [Oct. 2024] 🔧 We update the usage in the FunASR interface with source selection. "ms" or "modelscope" for China mainland users; "hf" or "huggingface" for other overseas users. **We recommend using FunASR interface for a smooth landing.**
 - [Jun. 2024] 🔧 We fix a bug in emotion2vec+. Please re-pull the latest code. 
 - [May. 2024] 🔥 Speech emotion recognition foundation model: **emotion2vec+**, with 9-class emotions has been released on [Model Scope](https://modelscope.cn/models/iic/emotion2vec_plus_large/summary) and [Hugging Face](https://huggingface.co/emotion2vec). Check out a series of emotion2vec+ (seed, base, large) models for SER with high performance **(We recommend this release instead of the Jan. 2024 release)**. 
 - [Jan. 2024] 9-class emotion recognition model with iterative fine-tuning from emotion2vec has been released in [modelscope](https://www.modelscope.cn/models/iic/emotion2vec_base_finetuned/summary) and [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/main/examples/industrial_data_pretraining/emotion2vec). 
@@ -42,7 +42,6 @@ GitHub Repo: [emotion2vec](https://github.com/ddlBoJack/emotion2vec)
   - [Data Engineering](#data-engineering)
   - [Performance](#performance)
   - [Inference with checkpoints](#inference-with-checkpoints)
-    - [Install from modelscope (Recommended)](#install-from-modelscope-recommended)
     - [Install from FunASR](#install-from-funasr)
 - [emotion2vec: universal speech emotion representation model](#emotion2vec-universal-speech-emotion-representation-model)
   - [Guides](#guides-1)
@@ -55,9 +54,9 @@ GitHub Repo: [emotion2vec](https://github.com/ddlBoJack/emotion2vec)
     - [Download extracted features](#download-extracted-features)
     - [Extract features from your dataset](#extract-features-from-your-dataset)
       - [Install from the source code](#install-from-the-source-code)
-      - [Install from modelscope (Recommended)](#install-from-modelscope-recommended-1)
       - [Install from FunASR](#install-from-funasr-1)
   - [Training your downstream model](#training-your-downstream-model)
+  - [Contributors](#contributors)
   - [Citation](#citation)
 
 # emotion2vec+: speech emotion recognition foundation model
@@ -84,52 +83,7 @@ Performance on [EmoBox](https://github.com/emo-box/EmoBox) for 4-class primary e
 
 ## Inference with checkpoints
 
-### Install from modelscope
-
-1. install modelscope and funasr
-```bash
-pip install -U funasr modelscope
-```
-
-2. run the code.
-```python
-'''
-Using the finetuned emotion recognization model
-
-rec_result contains {'feats', 'labels', 'scores'}
-	extract_embedding=False: 9-class emotions with scores
-	extract_embedding=True: 9-class emotions with scores, along with features
-
-9-class emotions: 
-iic/emotion2vec_plus_seed, iic/emotion2vec_plus_base, iic/emotion2vec_plus_large (May. 2024 release)
-iic/emotion2vec_base_finetuned (Jan. 2024 release)
-    0: angry
-    1: disgusted
-    2: fearful
-    3: happy
-    4: neutral
-    5: other
-    6: sad
-    7: surprised
-    8: unknown
-'''
-
-from modelscope.pipelines import pipeline
-from modelscope.utils.constant import Tasks
-
-inference_pipeline = pipeline(
-    task=Tasks.emotion_recognition,
-    model="iic/emotion2vec_plus_large", # Alternative: iic/emotion2vec_plus_seed, iic/emotion2vec_plus_base, iic/emotion2vec_plus_large and iic/emotion2vec_base_finetuned
-    model_revision="master")
-
-rec_result = inference_pipeline('https://isv-data.oss-cn-hangzhou.aliyuncs.com/ics/MaaS/ASR/test_audio/asr_example_zh.wav', output_dir="./outputs", granularity="utterance", extract_embedding=False)
-print(rec_result)
-```
-The model will be downloaded automatically.
-
-
-
-### Install from FunASR (Recommended)
+### Install from FunASR
 1. install funasr
 ```bash
 pip install -U funasr
@@ -160,7 +114,16 @@ iic/emotion2vec_base_finetuned (Jan. 2024 release)
 
 from funasr import AutoModel
 
-model = AutoModel(model="iic/emotion2vec_base_finetuned") # Alternative: iic/emotion2vec_plus_seed, iic/emotion2vec_plus_base, iic/emotion2vec_plus_large and iic/emotion2vec_base_finetuned
+# model="iic/emotion2vec_base"
+# model="iic/emotion2vec_base_finetuned"
+# model="iic/emotion2vec_plus_seed"
+# model="iic/emotion2vec_plus_base"
+model_id = "iic/emotion2vec_plus_large"
+
+model = AutoModel(
+    model=model_id,
+    hub="ms",  # "ms" or "modelscope" for China mainland users; "hf" or "huggingface" for other overseas users
+)
 
 wav_file = f"{model.model_path}/example/test.wav"
 rec_result = model.generate(wav_file, output_dir="./outputs", granularity="utterance", extract_embedding=False)
@@ -223,40 +186,7 @@ git clone https://github.com/ddlBoJack/emotion2vec.git
 
 3. modify and run `scripts/extract_features.sh`
 
-#### Install from modelscope
-
-1. install modelscope and funasr
-```bash
-pip install -U funasr modelscope
-```
-
-2. run the code.
-```python
-'''
-Using the emotion representation model
-rec_result only contains {'feats'}
-	granularity="utterance": {'feats': [*768]}
-	granularity="frame": {feats: [T*768]}
-'''
-
-from modelscope.pipelines import pipeline
-from modelscope.utils.constant import Tasks
-
-inference_pipeline = pipeline(
-    task=Tasks.emotion_recognition,
-    model="iic/emotion2vec_base",
-    model_revision="master")
-
-rec_result = inference_pipeline('https://isv-data.oss-cn-hangzhou.aliyuncs.com/ics/MaaS/ASR/test_audio/asr_example_zh.wav', output_dir="./outputs", granularity="utterance")
-print(rec_result)
-```
-The model will be downloaded automatically.
-
-Refer to model scope of [emotion2vec_base](https://www.modelscope.cn/models/damo/emotion2vec_base/summary) and [emotion2vec_base_finetuned](https://www.modelscope.cn/models/iic/emotion2vec_base_finetuned/summary) for more details.
-
-
-
-#### Install from FunASR (Recommended)
+#### Install from FunASR
 1. install funasr
 ```bash
 pip install -U funasr
@@ -273,7 +203,11 @@ rec_result only contains {'feats'}
 
 from funasr import AutoModel
 
-model = AutoModel(model="iic/emotion2vec_base")
+model_id = "iic/emotion2vec_base"
+model = AutoModel(
+    model=model_id,
+    hub="ms",  # "ms" or "modelscope" for China mainland users; "hf" or "huggingface" for other overseas users
+)
 
 wav_file = f"{model.model_path}/example/test.wav"
 rec_result = model.generate(wav_file, output_dir="./outputs", granularity="utterance")
@@ -292,13 +226,22 @@ Refer to [FunASR](https://github.com/alibaba-damo-academy/FunASR/tree/main/examp
 ## Training your downstream model
 We provide training scripts for IEMOCAP dataset in the `iemocap_downstream` folder. You can modify the scripts to train your downstream model on other datasets.
 
+## Contributors
+|  Institution | Contribution |
+|:------|:-----|
+| [Shanghai Jiao Tong University](https://www.seiee.sjtu.edu.cn/) | Researchers; Computing power; Data collection; |
+| [Fudan University](https://istbi.fudan.edu.cn/) | Researchers |
+| [The Chinese University of Hong Kong](https://www.cuhk.edu.hk/chinese/index.html) | Researchers |
+| [Alibaba Group](https://www.alibaba.com/) | Researchers; Computing power; Data host; Model host; |
+| [Peng Cheng Laboratory](https://data-starcloud.pcl.ac.cn/) | Researchers |
+
 ## Citation
 If you find our emotion2vec code and paper useful, please kindly cite:
 ```
 @article{ma2023emotion2vec,
   title={emotion2vec: Self-Supervised Pre-Training for Speech Emotion Representation},
   author={Ma, Ziyang and Zheng, Zhisheng and Ye, Jiaxin and Li, Jinchao and Gao, Zhifu and Zhang, Shiliang and Chen, Xie},
-  journal={arXiv preprint arXiv:2312.15185},
-  year={2023}
+  journal={Proc. ACL 2024 Findings},
+  year={2024}
 }
 ```
